@@ -64,9 +64,9 @@ const ReviewInputForm = () => {
     await new Promise((r) => setTimeout(r, 1000));
 
     try {
-      const response = await fetch("http://localhost:8080/review-response", {
+      const response = await fetch("/review-response", {
         method: "POST",
-        mode: "cors",
+        // mode: "cors",
         headers: {
           "Content-Type": "application/json",
         },
