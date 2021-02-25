@@ -18,6 +18,8 @@ import {
   Instagram as InstagramIcon,
 } from "@material-ui/icons";
 
+import AppList from "../components/AppList";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -53,24 +55,7 @@ const MenuBar = ({ appName }) => {
       onClick={() => setOpenSidebar(false)}
       onKeyDown={() => setOpenSidebar(false)}
     >
-      <List>
-        <Link to="/review-responses" className={classes.secretLink}>
-          <ListItem button key="review-response-generator">
-            <ListItemIcon>
-              <ChatIcon />
-            </ListItemIcon>
-            <ListItemText primary="Review Response Generator" />
-          </ListItem>
-        </Link>
-        <Link to="/caption-generator" className={classes.secretLink}>
-          <ListItem button key="review-response-generator">
-            <ListItemIcon>
-              <InstagramIcon />
-            </ListItemIcon>
-            <ListItemText primary="Social Post Caption Generator" />
-          </ListItem>
-        </Link>
-      </List>
+      <AppList />
     </div>
   );
 

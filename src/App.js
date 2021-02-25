@@ -5,6 +5,7 @@ import { Container } from "@material-ui/core";
 
 import ReviewInputForm from "./containers/ReviewInputForm";
 import CaptionGeneratorForm from "./containers/CaptionGeneratorForm";
+import AppList from "./components/AppList";
 
 function App() {
   return (
@@ -21,6 +22,12 @@ function App() {
             <Menu appName="Caption Generator" />
             <Container maxWidth="md">
               <CaptionGeneratorForm />
+            </Container>
+          </Route>
+          <Route path="/">
+            <Menu appName="GPT-3 App List" />
+            <Container maxWidth="sm">
+              <AppList />
             </Container>
           </Route>
         </Switch>
