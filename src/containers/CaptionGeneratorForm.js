@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ReviewInputForm = () => {
+const CaptionGeneratorForm = () => {
   const classes = useStyles();
 
   const [loading, setLoading] = useState(false);
@@ -32,39 +32,25 @@ const ReviewInputForm = () => {
 
   const [bizName, setBizName] = useState("");
   const [bizType, setBizType] = useState("");
-  const [reviewer, setReviewer] = useState("");
-  const [stars, setStars] = useState(2.5);
-  const [signoff, setSignoff] = useState("");
-  const [reviewText, setReviewText] = useState("");
-  const [responseText, setResponseText] = useState("");
+  const [description, setDescription] = useState("");
+  const [suggestionText, setSuggestionText] = useState("");
 
   const onSubmit = async () => {
     setLoading(true);
-    setResponseText("");
+    setSuggestionText("");
 
-    console.log(
-      "Submitted",
-      reviewText,
-      bizName,
-      bizType,
-      reviewer,
-      stars,
-      signoff
-    );
+    console.log("Submitted", bizName, bizType, description);
 
     const body = {
       businessName: bizName,
       vertical: bizType,
-      signoff: signoff,
-      reviewer: reviewer,
-      stars: stars,
-      reviewText: reviewText,
+      businessDescription: description,
     };
 
     await new Promise((r) => setTimeout(r, 1000));
 
     try {
-      const response = await fetch("/review-response", {
+      const response = await fetch("/post-caption", {
         method: "POST",
         // mode: "cors",
         headers: {
@@ -76,7 +62,7 @@ const ReviewInputForm = () => {
 
       console.log("Result: ", response, responseText);
 
-      setResponseText(responseText);
+      setSuggestionText(responseText);
       setModalOpen(true);
     } catch (e) {
       console.error("Error fetching response: ", e);
@@ -105,34 +91,16 @@ const ReviewInputForm = () => {
           onChange={(e) => setBizType(e.target.value)}
           value={bizType}
         />
-        <StarsSlider stars={stars} setStars={setStars} />
         <TextField
-          id="reviewer-name"
-          label="Reviewer Name"
-          fullWidth
-          margin="normal"
-          onChange={(e) => setReviewer(e.target.value)}
-          value={reviewer}
-        />
-        <TextField
-          id="owner-name"
-          label="Sign-Off"
-          fullWidth
-          margin="normal"
-          placeholder="Jane Doe, Owner"
-          onChange={(e) => setSignoff(e.target.value)}
-          value={signoff}
-        />
-        <TextField
-          id="review-text"
-          label="Review Text"
+          id="description-text"
+          label="Business Short Description"
           multiline
-          rows={4}
+          rows={8}
           variant="outlined"
           fullWidth
           margin="normal"
-          onChange={(e) => setReviewText(e.target.value)}
-          value={reviewText}
+          onChange={(e) => setDescription(e.target.value)}
+          value={description}
         />
         <div className={classes.wrapper}>
           <Button
@@ -149,16 +117,16 @@ const ReviewInputForm = () => {
         </div>
       </form>
       <ResultModal
-        title="Suggested Response"
-        responseText={responseText}
+        title="Suggested Captions"
+        responseText={suggestionText}
         open={modalOpen}
         handleClose={() => {
           setModalOpen(false);
-          setResponseText("");
+          setSuggestionText("");
         }}
       />
     </div>
   );
 };
 
-export default ReviewInputForm;
+export default CaptionGeneratorForm;

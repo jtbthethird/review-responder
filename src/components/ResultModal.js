@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ResponseModal = ({ responseText, open, handleClose }) => {
+const ResultModal = ({ title, responseText, open, handleClose }) => {
   const classes = useStyles();
 
   const textRef = useRef(null);
@@ -38,14 +38,14 @@ const ResponseModal = ({ responseText, open, handleClose }) => {
     >
       <div className={classes.paper}>
         <Typography variant="h4" gutterBottom>
-          Suggested Response
+          {title}
         </Typography>
         <TextField
           ref={textRef}
           value={responseText}
           multiline
           fullWidth
-          rows={4}
+          rows={10}
           variant="outlined"
           InputProps={{
             readOnly: true,
@@ -65,4 +65,4 @@ const ResponseModal = ({ responseText, open, handleClose }) => {
   );
 };
 
-export default ResponseModal;
+export default ResultModal;

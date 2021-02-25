@@ -5,6 +5,7 @@ const path = require("path");
 const app = express();
 
 const ReviewResponder = require("./review-response");
+const PostGenerator = require("./social-post-caption");
 
 // const corsOptions = {
 //   origin: "*",
@@ -19,12 +20,14 @@ app.get("/ping", function (req, res) {
 });
 
 app.post("/review-response", async function (req, res) {
-  console.log("Request Body: ", req.body);
-
   const s = await ReviewResponder.generateReviewResponse(req.body);
-  console.log(s);
 
   return res.send(s);
+});
+
+app.post("/post-caption", async function (req, res) {
+  const s = await PostGenerator.generateSocialPostCaptions(req.body);
+  res.send(s);
 });
 
 app.get("/", function (req, res) {
