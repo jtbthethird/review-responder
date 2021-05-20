@@ -80,4 +80,75 @@ const generateReviewResponse = async ({
   return "Error!";
 };
 
+const createReviewInput = (reviewObj, includeResponse = true) => {
+  let prompt = `Business: ${reviewObj.business.trim()}
+Vertical: ${reviewObj.vertical.trim()}
+Signoff: ${reviewObj.signoff.trim()}
+Stars: ${reviewObj.stars}
+Reviewer: ${reviewObj.reviewer.trim()}
+Review: ${reviewObj.review.trim()}`;
+
+  if (includeResponse) {
+    prompt =
+      prompt +
+      `
+Response: ${reviewObj.response.trim()}
+###`;
+  }
+  return prompt;
+};
+
+const generateReviewResponse2 = async ({
+  samples,
+  outputReview,
+  temperature,
+  numResults,
+}) => {
+  // console.log(samples);
+
+  const prompt = `Review Response Generator
+###
+${createReviewInput(samples[0])}
+${createReviewInput(samples[1])}
+${createReviewInput(samples[2])}
+${createReviewInput(outputReview, false)}
+Response:`;
+
+  const openai = new OpenAI(process.env.OPEN_AI_SECRET_KEY);
+
+  console.log(prompt);
+
+  try {
+    const gptResponse = await openai.complete({
+      engine: "davinci",
+      prompt: prompt,
+      maxTokens: 512,
+      temperature: temperature,
+      topP: 1,
+      bestOf: 5,
+      n: numResults,
+      stream: false,
+      stop: ["\n", "\n###"],
+    });
+
+    console.log(gptResponse.data);
+
+    const { choices } = gptResponse.data;
+    if (choices && choices[0]) {
+      const results = choices.map((element, index) => {
+        return `${index + 1}. ${element.text.trim()}`;
+      });
+
+      console.log("Returning response: ", results);
+      return results.join("\n\n");
+    }
+    return "Failed to get a response!";
+  } catch (e) {
+    console.log("OpenAI Error: ", e);
+  }
+
+  return "Error!";
+};
+
 exports.generateReviewResponse = generateReviewResponse;
+exports.generateReviewResponse2 = generateReviewResponse2;

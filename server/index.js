@@ -25,6 +25,12 @@ app.post("/review-response", async function (req, res) {
   return res.send(s);
 });
 
+app.post("/review-response-2", async function (req, res) {
+  const s = await ReviewResponder.generateReviewResponse2(req.body);
+
+  return res.send(s);
+});
+
 app.post("/post-caption", async function (req, res) {
   const s = await PostGenerator.generateSocialPostCaptions(req.body);
   res.send(s);

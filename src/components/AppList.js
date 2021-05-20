@@ -39,6 +39,15 @@ const AppList = () => {
           <ListItemText primary="Review Response Generator" />
         </ListItem>
       </Link>
+      <Link to="/review-responses-2" className={classes.secretLink}>
+        <ListItem button key="review-response-generator-2">
+          <ListItemIcon>
+            <ChatIcon />
+          </ListItemIcon>
+          <ListItemText primary="Review Response Generator v2" />
+        </ListItem>
+      </Link>
+
       <Link to="/caption-generator" className={classes.secretLink}>
         <ListItem button key="review-response-generator">
           <ListItemIcon>

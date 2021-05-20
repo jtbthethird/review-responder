@@ -61,8 +61,6 @@ const ReviewInputForm = () => {
       reviewText: reviewText,
     };
 
-    await new Promise((r) => setTimeout(r, 1000));
-
     try {
       const response = await fetch("/review-response", {
         method: "POST",

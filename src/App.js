@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container } from "@material-ui/core";
 
 import ReviewInputForm from "./containers/ReviewInputForm";
+import MultiReviewInputForm from "./containers/MultiReviewInputForm";
 import CaptionGeneratorForm from "./containers/CaptionGeneratorForm";
 import AppList from "./components/AppList";
 
@@ -16,6 +17,12 @@ function App() {
             <Menu appName="Review Response" />
             <Container maxWidth="md">
               <ReviewInputForm />
+            </Container>
+          </Route>
+          <Route path="/review-responses-2">
+            <Menu appName="Review Response v2" />
+            <Container maxWidth="md">
+              <MultiReviewInputForm />
             </Container>
           </Route>
           <Route path="/caption-generator">
